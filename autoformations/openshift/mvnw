@@ -1,2 +1,0 @@
-./mvnw clean package -DskipTests
-docker build -t springboot-openshift:1.0 .
