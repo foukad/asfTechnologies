@@ -1,5 +1,5 @@
 export async function api(path: string, options: RequestInit = {}) {
-  // Lire les cookies (middleware + useAuth les utilisent)
+  // Lire les cookies (proxy + useAuth les utilisent)
   const token = getCookie("token");
   const tenantId = getCookie("tenantId");
 

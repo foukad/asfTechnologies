@@ -8,53 +8,70 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     async function handleLogin() {
         setLoading(true);
+        setError("");
         try {
             await login(email, password);
             window.location.href = "/clients";
         } catch {
-            alert("Identifiants incorrects");
+            setError("Email ou mot de passe incorrect.");
         }
         setLoading(false);
     }
 
     return (
-        <div className="p-6 max-w-sm mx-auto">
-            <h1 className="text-xl font-bold mb-4">Connexion</h1>
+        <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
+            <div className="w-full max-w-sm">
+                {/* Logo */}
+                <div className="text-center mb-8">
+                    <div className="text-4xl mb-2">🔥</div>
+                    <h1 className="text-2xl font-bold" style={{ color: "var(--text)" }}>HeatOps</h1>
+                    <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>Gestion d’interventions CVC</p>
+                </div>
 
-            <input
-                className="border p-2 mb-2 w-full rounded"
-                placeholder="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
+                <div className="card space-y-4">
+                    <h2 className="text-base font-semibold" style={{ color: "var(--text)" }}>Connexion</h2>
 
-            <input
-                className="border p-2 mb-4 w-full rounded"
-                placeholder="Mot de passe"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                    {error && (
+                        <p className="alert-error">{error}</p>
+                    )}
 
-            <button
-                className="bg-primary text-white px-4 py-2 w-full rounded disabled:opacity-50"
-                onClick={handleLogin}
-                disabled={loading}
-            >
-                {loading ? "Connexion..." : "Se connecter"}
-            </button>
+                    <input
+                        className="input"
+                        placeholder="Email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
-            <p className="text-center mt-4 text-sm">
-                Pas encore de compte ?{" "}
-                <a href="/register" className="text-primary underline">
-                    S'inscrire
-                </a>
-            </p>
+                    <input
+                        className="input"
+                        placeholder="Mot de passe"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                    />
+
+                    <button
+                        className="btn-primary w-full"
+                        onClick={handleLogin}
+                        disabled={loading}
+                    >
+                        {loading ? "Connexion..." : "Se connecter"}
+                    </button>
+                </div>
+
+                <p className="text-center mt-5 text-sm" style={{ color: "var(--text-muted)" }}>
+                    Pas encore de compte ?{" "}
+                    <a href="/register" style={{ color: "var(--primary)" }} className="font-medium hover:underline">
+                        S’inscrire
+                    </a>
+                </p>
+            </div>
         </div>
     );
 }
-``

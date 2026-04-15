@@ -43,7 +43,7 @@ export function useAuth() {
         const payload = JSON.parse(atob(token.split(".")[1]));
         const tenant = payload.tenant;
 
-        // Stockage dans les cookies (pour le middleware)
+        // Stockage dans les cookies (pour le proxy)
         document.cookie = `token=${token}; path=/`;
         document.cookie = `tenantId=${tenant}; path=/`;
 

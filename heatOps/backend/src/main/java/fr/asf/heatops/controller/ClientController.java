@@ -1,6 +1,5 @@
 package fr.asf.heatops.controller;
 
-import fr.asf.heatops.domain.entity.Equipment;
 import fr.asf.heatops.dto.ApiErrorDTO;
 import fr.asf.heatops.dto.client.ClientRequestDTO;
 import fr.asf.heatops.dto.client.ClientResponseDTO;
@@ -16,7 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,7 +37,7 @@ public class ClientController {
     private final InterventionService interventionService;
 
     @Operation(summary = "Créer un client", description = "Crée un nouveau client",
-            requestBody = @RequestBody(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     required = true,
                     content = @Content(
                             mediaType = "application/json",

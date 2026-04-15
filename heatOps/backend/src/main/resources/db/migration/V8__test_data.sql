@@ -17,7 +17,7 @@ VALUES
 -- Equipments
 INSERT INTO equipment (id, company_id, name, brand, model, serial_number, active, created_at, updated_at)
 VALUES
-    ('dddddddd-dddd-dddd-dddd-dddddddddddd', '11111111-1111-1111-1111-111111111111', 'boiler', 'Vaillant', 'EcoPlus', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', true, NOW(), NOW());
+    ('dddddddd-dddd-dddd-dddd-dddddddddddd', '11111111-1111-1111-1111-111111111111', 'boiler', 'Vaillant', 'EcoPlus', 'SN-BOILER-0001', true, NOW(), NOW());
 
 -- Interventions
 INSERT INTO intervention (id, company_id, title, description, status, scheduled_at, client_id, equipment_id, technician_id, active, created_at, updated_at)

@@ -10,15 +10,16 @@ public class TenantEntityListener {
 
 @PrePersist public void prePersist(BaseTenantEntity entity) {
     LocalDateTime now = LocalDateTime.now();
-entity.setCreatedAt(now);
-entity.setUpdatedAt(now);
-// Injection automatique du tenant
-if (entity.getCompanyId() == null) {
-    entity.setCompanyId(TenantContext.getTenant());
-}
-entity.setActive(true);
+    entity.setCreatedAt(now);
+    entity.setUpdatedAt(now);
+    // Injection automatique du tenant
+    if (entity.getCompanyId() == null) {
+        entity.setCompanyId(TenantContext.getTenant());
+    }
+    entity.setActive(true);
 }
 
 @PreUpdate public void preUpdate(BaseTenantEntity entity) {
-entity.setUpdatedAt(LocalDateTime.now()); }
+    entity.setUpdatedAt(LocalDateTime.now());
+}
 }
