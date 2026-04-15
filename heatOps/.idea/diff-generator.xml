@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DiffGenerationConfig">
+    <option name="sourceModelValue" value="backend:entityManagerFactory" />
+    <option name="targetDbValue" value="47c584e5-ffeb-4d3a-9554-0206aab799fd" />
+  </component>
+</project>

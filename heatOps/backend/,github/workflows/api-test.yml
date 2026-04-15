@@ -1,0 +1,35 @@
+name: HeatOps API Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  newman-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Newman
+        run: npm install -g newman newman-reporter-junitfull
+
+      - name: Run Postman tests
+        run: |
+          newman run postman/HeatOps-SoftDelete-Tests.postman_collection.json \
+            -e postman/HeatOps-Local.postman_environment.json \
+            --reporters cli,junitfull \
+            --reporter-junitfull-export newman-report.xml
+
+      - name: Upload Newman report
+        uses: actions/upload-artifact@v3
+        with:
+          name: newman-report
+          path: newman-report.xml

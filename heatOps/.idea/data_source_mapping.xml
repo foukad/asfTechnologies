@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/47c584e5-ffeb-4d3a-9554-0206aab799fd/console.sql" value="47c584e5-ffeb-4d3a-9554-0206aab799fd" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/47c584e5-ffeb-4d3a-9554-0206aab799fd/console_1.sql" value="47c584e5-ffeb-4d3a-9554-0206aab799fd" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/migration/V5__create_intervention_table.sql" value="47c584e5-ffeb-4d3a-9554-0206aab799fd" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/migration/V8__test_data.sql" value="47c584e5-ffeb-4d3a-9554-0206aab799fd" />
+  </component>
+</project>

@@ -1,4 +1,8 @@
 package fr.asf.heatops.enums;
 
-public enum InterventionsStatus {
+public enum InterventionStatus {
+    PLANNED,
+    IN_PROGRESS,
+    DONE
 }
+

@@ -1,13 +1,15 @@
--- Ajout du statut de l'intervention
-ALTER TABLE intervention
-    ADD COLUMN status VARCHAR(50) NOT NULL DEFAULT 'PLANNED';
+ALTER TABLE client ADD COLUMN active BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE client ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT NOW();
+ALTER TABLE client ADD COLUMN updated_at TIMESTAMP NOT NULL DEFAULT NOW();
 
--- Ajout des timestamps métier (optionnels mais recommandés)
-ALTER TABLE intervention
-    ADD COLUMN started_at TIMESTAMP NULL,
-    ADD COLUMN completed_at TIMESTAMP NULL;
+ALTER TABLE equipment ADD COLUMN active BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE equipment ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT NOW();
+ALTER TABLE equipment ADD COLUMN updated_at TIMESTAMP NOT NULL DEFAULT NOW();
 
--- Contrainte de validation des statuts
-ALTER TABLE intervention
-    ADD CONSTRAINT chk_intervention_status
-        CHECK (status IN ('PLANNED', 'IN_PROGRESS', 'DONE'));
+ALTER TABLE technician ADD COLUMN active BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE technician ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT NOW();
+ALTER TABLE technician ADD COLUMN updated_at TIMESTAMP NOT NULL DEFAULT NOW();
+
+ALTER TABLE intervention ADD COLUMN active BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE intervention ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT NOW();
+ALTER TABLE intervention ADD COLUMN updated_at TIMESTAMP NOT NULL DEFAULT NOW();

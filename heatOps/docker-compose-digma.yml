@@ -1,0 +1,84 @@
+version: '3.8'
+
+name: heatops-obs
+
+services:
+  # OpenTelemetry Collector - Reçoit les données (traces, métriques, logs)
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.93.0
+    container_name: digma-otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    ports:
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP receiver
+      - "8888:8888"   # Prometheus metrics
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    depends_on:
+      - jaeger
+    networks:
+      - observability
+    environment:
+      - GOGC=80
+
+  # Jaeger - Backend pour les traces (compatible avec Digma/OpenTelemetry)
+  jaeger:
+    image: jaegertracing/all-in-one:1.53
+    container_name: digma-jaeger
+    ports:
+      - "5775:5775/udp"   # Jaeger compact thrift
+      - "6831:6831/udp"   # Jaeger compact thrift
+      - "6832:6832/udp"   # Jaeger binary thrift
+      - "5778:5778"       # Jaeger HTTP
+      - "16686:16686"     # Jaeger UI
+      - "14250:14250"     # Jaeger gRPC
+      - "14268:14268"     # Jaeger HTTP Thrift
+      - "14269:14269"     # Jaeger admin port
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+      - LOG_LEVEL=info
+    networks:
+      - observability
+
+  # Prometheus - Métriques
+  prometheus:
+    image: prom/prometheus:v2.48.1
+    container_name: digma-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - observability
+
+  # Grafana - Visualisation
+  grafana:
+    image: grafana/grafana:10.2.3
+    container_name: digma-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - observability
+    depends_on:
+      - prometheus
+
+volumes:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  observability:
+    driver: bridge

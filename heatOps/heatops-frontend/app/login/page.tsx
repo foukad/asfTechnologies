@@ -1,49 +1,60 @@
 "use client";
 
-import { api } from "@/lib/api";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
-export default function NewClientPage() {
-  const router = useRouter();
-  const [form, setForm] = useState({ name: "", email: "", phone: "" });
+export default function LoginPage() {
+    const { login } = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
-  async function submit() {
-    await api("/clients", {
-      method: "POST",
-      body: JSON.stringify(form)
-    });
-    router.push("/clients");
-  }
+    async function handleLogin() {
+        setLoading(true);
+        try {
+            await login(email, password);
+            window.location.href = "/clients";
+        } catch {
+            alert("Identifiants incorrects");
+        }
+        setLoading(false);
+    }
 
-  return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Nouveau client</h1>
+    return (
+        <div className="p-6 max-w-sm mx-auto">
+            <h1 className="text-xl font-bold mb-4">Connexion</h1>
 
-      <input
-        className="input"
-        placeholder="Nom"
-        value={form.name}
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
-      />
+            <input
+                className="border p-2 mb-2 w-full rounded"
+                placeholder="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
 
-      <input
-        className="input"
-        placeholder="Email"
-        value={form.email}
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-      />
+            <input
+                className="border p-2 mb-4 w-full rounded"
+                placeholder="Mot de passe"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
 
-      <input
-        className="input"
-        placeholder="Téléphone"
-        value={form.phone}
-        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-      />
+            <button
+                className="bg-primary text-white px-4 py-2 w-full rounded disabled:opacity-50"
+                onClick={handleLogin}
+                disabled={loading}
+            >
+                {loading ? "Connexion..." : "Se connecter"}
+            </button>
 
-      <button className="btn mt-4" onClick={submit}>
-        Créer
-      </button>
-    </div>
-  );
+            <p className="text-center mt-4 text-sm">
+                Pas encore de compte ?{" "}
+                <a href="/register" className="text-primary underline">
+                    S'inscrire
+                </a>
+            </p>
+        </div>
+    );
 }
+``

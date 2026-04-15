@@ -1,3 +1,46 @@
 spring:
-  application:
-    name: backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/heatops
+    username: postgres
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+# OpenTelemetry / Observability Configuration
+otel:
+  service:
+    name: heatops-backend
+  traces:
+    exporter: otlp
+  metrics:
+    exporter: otlp
+  logs:
+    exporter: otlp
+  exporter:
+    otlp:
+      endpoint: http://localhost:4317
+      protocol: grpc
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+

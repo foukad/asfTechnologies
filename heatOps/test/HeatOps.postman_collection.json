@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "HeatOps MVP",
+    "_postman_id": "heatops-mvp-collection",
+    "description": "Tests API pour HeatOps (Auth, Clients, Equipments, Interventions, Technicians, Multi-tenant)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@heatops.com\",\n  \"password\": \"password\",\n  \"companyName\": \"HeatOps\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@heatops.com\",\n  \"password\": \"password\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Clients",
+      "item": [
+        {
+          "name": "Create Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@client.com\",\n  \"phone\": \"0600000000\"\n}"
+            },
+            "url": "{{baseUrl}}/clients"
+          }
+        },
+        {
+          "name": "Get Clients",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/clients?page=0&size=10"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Equipments",
+      "item": [
+        {
+          "name": "Create Equipment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Boiler X200\",\n  \"serialNumber\": \"SN123456\",\n  \"type\": \"Boiler\",\n  \"clientId\": \"{{clientId}}\"\n}"
+            },
+            "url": "{{baseUrl}}/equipments"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Technicians",
+      "item": [
+        {
+          "name": "Create Technician",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Alex\",\n  \"lastName\": \"Tech\",\n  \"email\": \"alex@tech.com\",\n  \"phone\": \"0700000000\"\n}"
+            },
+            "url": "{{baseUrl}}/technicians"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Interventions",
+      "item": [
+        {
+          "name": "Create Intervention",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Maintenance annuelle\",\n  \"description\": \"Contrôle complet\",\n  \"equipmentId\": \"{{equipmentId}}\"\n}"
+            },
+            "url": "{{baseUrl}}/interventions"
+          }
+        },
+        {
+          "name": "Assign Technician",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"technicianId\": \"{{technicianId}}\"\n}"
+            },
+            "url": "{{baseUrl}}/interventions/{{interventionId}}/assign"
+          }
+        }
+      ]
+    }
+  ]
+}
